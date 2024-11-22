@@ -43,6 +43,19 @@ In Spark, the `--master` and `--deploy-mode` parameters can be combined in speci
 - **Explanation:** Runs Spark on a Mesos cluster, with the driver running on one of the Mesos-managed nodes. This configuration is intended for production jobs, as it runs entirely on the cluster and doesn’t require a client machine connection once the job is submitted.
 
 ---
+spark-submit --master k8s://https://k8s-api-server:6443 ...
+
+### 10. `--master k8s://https://k8s-api-server:6443` and `--deploy-mode client`
+### 11. `--master k8s://https://k8s-api-server:6443` and `--deploy-mode cluster`
+   - **`k8s://https://HOST:PORT`**: Connects to a Kubernetes cluster. Replace `HOST` and `PORT` with the Kubernetes API server details.
+   - Requires additional configurations, such as a Docker image and namespace.
+
+   **Example:**
+   ```bash
+   spark-submit --master k8s://https://k8s-api-server:6443 ...
+   ```
+
+---
 
 ### Summary Table
 
@@ -57,5 +70,7 @@ In Spark, the `--master` and `--deploy-mode` parameters can be combined in speci
 | `yarn`                     | `cluster`       | YARN cluster mode with the driver on a YARN-managed node, ideal for production jobs.                  |
 | `mesos://<mesos-url>`      | `client`        | Mesos cluster mode with the driver on the client machine.                                             |
 | `mesos://<mesos-url>`      | `cluster`       | Mesos cluster mode with the driver on a Mesos-managed node, ideal for production jobs.                |
+| `k8s://https://HOST:PORT`  | `client`        |                                                                                                       |
+| `k8s://https://HOST:PORT`  | `cluster`       |                                                                                                       |
 
 Each of these combinations allows you to tailor Spark’s behavior depending on the environment (local machine or cluster) and the job’s purpose (development or production).
